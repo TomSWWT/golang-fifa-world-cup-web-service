@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAddNewWinnerHandlerReturnsUnauthorizedForInvalidAccessToken(t *testing.T) {
@@ -54,9 +56,10 @@ func TestAddNewWinnerHandlerAddsNewWinnerWithValidData(t *testing.T) {
 	var winners data.Winners
 	json.Unmarshal([]byte(allWinners), &winners)
 
-	if len(winners.Winners) != 22 {
-		t.Error("Did not properly add new winner to the list")
-	}
+	assert.Equal(t, 22, len(winners.Winners))
+	// if len(winners.Winners) != 22 {
+	// 	t.Error("Did not properly add new winner to the list")
+	// }
 }
 
 func TestAddNewWinnerHandlerReturnsUnprocessableEntityForEmptyPayload(t *testing.T) {
